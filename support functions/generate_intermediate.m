@@ -1,4 +1,24 @@
 function [out_params] = generate_intermediate(imgSeqExd, C, p, window, structureThres, refIdx)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% The function extract the reference patch index, mu, sigma square, input                       %
+% sequence mu, and input sequence sigma square                                                  %
+%   input:  1. imgSeq:  image sequences at multiple exposure levels [0-255]                     %
+%           2. fI: the MEF image being evaluated in [0-255] grayscale.                          %
+%           3. C                                                                                %
+%           4. p                                                                                %
+%           5. window: sliding window (default 8x8 average window)                              %
+%           6. SturctureThres                                                                   %
+%           7. refIdx:                                                                          %
+%                                                                                               %
+%   output struct:                                                                              %
+%           1. ed: signal strength                                                              %
+%           2. lmu: local mean intensity                                                        %
+%           3. patchIndex: patch index of the patch with the maximum euclidean length           %
+%           4. sMap: the third term in SSIM among each exposed image                            %
+%           5. maxEd: desired signal strength                                                   %
+%           5. indexMap: region segmentation map                                                %
+%           6. indM: index matrix for the main loop                                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 imgSeqExd = double(imgSeqExd);
 [s1, s2, numExd] = size(imgSeqExd);
@@ -6,7 +26,6 @@ s3 = (numExd + 1) / 2;    % exposure number
 wSize = size(window,1);
 xIdxMax = s1-wSize+1;
 yIdxMax = s2-wSize+1;
-% C = (C*255)^2;
 gMu = zeros(xIdxMax, yIdxMax, numExd); % global mean intensity
 for i = 1 : numExd
     img = imgSeqExd(:,:,i);
@@ -23,7 +42,7 @@ for i = 1 : numExd
 end
 
 sigma = sqrt( max( sigmaSq, 0 ) );
-ed = sigma*wSize  + 0.001; % signal strengh
+ed = sigma*wSize  + 0.001; % signal strength
 
 % computing structural consistency map
 count = 0;
@@ -39,10 +58,7 @@ for i = 1 : s3
         sRefMap(:,:,count) = sMap(:,:,i,j); % the third term in SSIM
     end
 end
-% sMap(sMap < 0) = 0;
 
-% sRefMap = squeeze(sMap(:,:,refIdx,:)) + sMap(:,:,:,refIdx);
-% sRefMap(:,:,refIdx) = ones(xIdxMax, yIdxMax); % add reference
 sRefMap(sRefMap < structureThres) = 0;
 sRefMap(sRefMap >= structureThres) = 1;
 indexMap=zeros(xIdxMax,yIdxMax);
@@ -55,7 +71,7 @@ end
 for k=1:numIndex
     indexMap=indexMap+sRefMap(:,:,k);
 end
-indexMap(indexMap <numIndex) = 0;
+indexMap(indexMap < numIndex) = 0;
 indexMap(indexMap >= numIndex) = 1;%final binary map
 clear sMap;
 clear sRefMap;
@@ -82,38 +98,6 @@ for i = 1 : s3
         indM(:,:,i) = cMapExd(:, :, i) * i + cMapExd(:, :, i+s3-1) * (i+s3-1);
     end
 end
-
-% stepSize = 1;
-% xIdx = 1 : stepSize : xIdxMax;
-% xIdx = [xIdx xIdx(end)+1 : xIdxMax];
-% yIdx = 1 : stepSize : yIdxMax;
-% yIdx = [yIdx yIdx(end)+1 : yIdxMax];
-% 
-% offset = wSize-1;
-% 
-% R = zeros(xIdxMax, yIdxMax);
-% for row = 1 : length(xIdx)
-%     for col = 1 : length(yIdx)
-%         i = xIdx(row);
-%         j = yIdx(col);
-%         blocks = imgSeqExd(i:i+offset, j:j+offset, indM(i,j,:));
-%         vecs = reshape(blocks, [wSize*wSize, s3]);
-%         denominator = 0;
-%         for k=1:s3
-%             denominator = denominator + norm(vecs(:,k) - lMu(i,j,k));
-%         end
-%         numerator = norm(sum(vecs,2) - mean(sum(vecs,2)));
-%         R(i, j) = (numerator + eps) / (denominator + eps);
-%     end
-% end
-% R(R > 1) = 1 - eps;
-% R(R < 0) = 1 + eps;
-% 
-% w = tan(pi/2 * R);
-% w(w > 10) = 10; %large number such as 10 is equivalent to taking maximum
-% w = repmat(w, [1,1,numExd]);
-
-
 
 
 

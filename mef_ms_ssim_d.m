@@ -1,24 +1,75 @@
-function [oQ,  qMap] = mef_ms_ssim_d(imgSeq, fI, varargin)
-% ========================================================================
-
+function [Q,  qMap] = mef_ms_ssim_d(imgSeq, fI, varargin)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Multi-exposure fused (MEF) for dynamic scene image quality model Version 1.0  %
+% Copyright(c) 2019 Yuming Fang, Hanwei Zhu, Kede Ma, Zhou Wang, and Shutao Li  %
+% All Rights Reserved.                                                          %
+%                                                                               %
+% ------------------------------------------------------------------------------%
+% Permission to use, copy, or modify this software and its documentation        %
+% for educational and research purposes only and without fee is hereby          %
+% granted, provided that this copyright notice and the original authors'        %
+% names appear on all copies and supporting documentation. This program         %
+% shall not be used, rewritten, or adapted as the basis of a commercial         %
+% software or hardware product without first obtaining permission of the        %
+% authors. The authors make no representations about the suitability of         %
+% this software for any purpose. It is provided "as is" without express         %
+% or implied warranty.                                                          %
+% ----------------------------------------------------------------------        %
+% This is an implementation of an objective image quality assessment model      %
+% for MEF of dynamic scene using their corresponding input source               %
+% sequences as reference                                                        %
+%                                                                               %
+% Please refer to the following paper:                                          %
+%                                                                               %
+% Y. Fang, H. Zhu, K. Ma, Z. Wang, and S. Li, "Perceptual Evaluation for        %
+% Multi-Exposure Image Fusion of Dynamic Scenes" submitted to IEEE              %
+% Transactions on  Image Processing                                             %
+%                                                                               %
+%                                                                               %
+% Kindly report any suggestions or corrections to h4nwei.zhu@gmail.com,         %
+% fa0001ng@e.ntu.edu.sg, k29ma@uwaterloo.ca, or zhouwang@ieee.org               %
+%                                                                               %
+%                                                                               %
+% ----------------------------------------------------------------------        %
+% MEF-SSIMd                                                                      %
+% input: (1) imgSeq: image sequences at multiple exposure levels [0-255].       %
+%        (2) fI: the MEF image being evaluated in [0-255] grayscale.            %
+% optional input:                                                               %
+%        (3) C: constant in the SSIM index formula (see the above               %
+%            reference). defualt value: K = (0.03*255)^2                        %
+%        (4) p: the exponent parameter.  default value p = 4;                   %
+%        (5) structureThres: the structure consistent threshold.                %
+%                      defualt value: structureThres = 0.5                      %
+%        (6) window: local window for statistics. default widnow is             %
+%            Gaussian given by window = fspecial('gaussian', 11, 1.5);          %
+%                                                                               %
+%                                                                               %
+%                                                                               %
+% output: (1) oQ: The overlll quality score of the MEF image.                   %
+%         (2)  Q: The quality scores in each scale.                             %
+%         (3) qMap: The quality maps of the MEF image in each scale.            %
+%                                                                               %
+%Basic Usage:                                                                   %
+%   Given the test MEF image and its corresponding source sequence              %
+%                                                                               %
+%   [Q, qMap] = mef_ms_ssim_d(imgSeq, fI);                                      %
+%                                                                               %
+%                                                                               %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % input params parsing
 params = inputParser;
 
 default_C = (0.03*255)^2;
 default_p = 4;
 default_structureThres = 0.5;
-default_weight = [0.0448  0.2856  0.3001]' / sum([0.0448  0.2856  0.3001]); 
 default_window = fspecial('gaussian', 11, 1.5);
-default_level = 1;
- 
+
 addRequired(params,'imgSeq');
 addRequired(params,'fI');
 addParameter(params, 'C', default_C, @isnumeric);
 addParameter(params, 'p', default_p, @isnumeric);
 addParameter(params, 'structureThres', default_structureThres, @isnumeric);
-addParameter(params, 'weight', default_weight, @isnumeric);
 addParameter(params, 'window', default_window, @isnumeric);
-addParameter(params, 'level', default_level, @isnumeric);
 
 parse(params, imgSeq, fI, varargin{:});
 
@@ -26,50 +77,11 @@ parse(params, imgSeq, fI, varargin{:});
 C = params.Results.C;
 p = params.Results.p;
 structureThres = params.Results.structureThres;
-weight = params.Results.weight;
 window = params.Results.window;
-level = params.Results.level;
 
-[H, W] = size(window);
-
-[s1, s2, s3] = size(imgSeq);
-minImgWidth = min(s1, s2)/(2^(level-1));
-maxWinWidth = max(H, W);
-if (minImgWidth < maxWinWidth)
-       return;
-end
 
 imgSeq = double(imgSeq);
 fI = double(fI);
-downsampleFilter = ones(2)./4;
-Q1 = zeros(level,1);
-Q2 = zeros(level,1);
-qMap = cell(level,1);
 
-
-
-if level == 1
-    [Q1, qMap] = mef_ssim_d(imgSeq, fI,  C, p, window, structureThres);
-    oQ = Q1;
-
-    return;
-else
-    for l = 1 : level - 1
-        [Q1(l),   qMap{l}] = mef_ssim_d(imgSeq, fI,  C, p, window, structureThres);
-        imgSeqC = imgSeq;
-        clear imgSeq;
-        for i = 1:s3
-            rI = squeeze(imgSeqC(:,:,i));
-            dI = imfilter(rI, downsampleFilter, 'symmetric', 'same');
-            imgSeq(:,:,i) = dI(1:2:end, 1:2:end);
-        end
-        dI = imfilter(fI, downsampleFilter, 'symmetric', 'same');
-        clear fI;
-        fI = dI(1:2:end, 1:2:end);
-    end
-    % the coarsest scale
-    [Q1(level), qMap{level}] = mef_ssim_d(imgSeq, fI,  C, p, window, structureThres);
-    Q1 = Q1(:);
-    oQ = prod(Q1.^weight);  
-end
-
+% MEF-SSIMd
+[Q, qMap] = mef_ssim_d(imgSeq, fI,  C, p, window, structureThres);

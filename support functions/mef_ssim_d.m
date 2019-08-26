@@ -1,5 +1,17 @@
-function [oQ, qMap] = mef_ssim_d(imgSeq, fI, C, p, window, structureThres)
-
+function [Q, qMap] = mef_ssim_d(imgSeq, fI, C, p, window, structureThres)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% The function calculate the MEF-SSIMd index quality score and  quality map                     %
+%   input:  1. imgSeq:  image sequences at multiple exposure levels [0-255]                     %
+%           2. fI: the MEF image being evaluated in [0-255] grayscale.                          %
+%           3. C                                                                                %
+%           4. p                                                                                %
+%           5. window: sliding window (default 8x8 average window)                              %
+%           6. SturctureThres                                                                   %
+%                                                                                               %
+%   output:                                                                                     %
+%           1. Q: MEF-SSIMd index quality score                                                 %
+%           2. qMap: MEF-SSIMd index quality map                                                %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 imgSeq = double(imgSeq);
 fI = double(fI);
@@ -31,13 +43,12 @@ for refIdx=1:s3
     [out_params] = generate_intermediate(imgSeqExd, C, p, sWindow, structureThres, refIdx);
     lMu = out_params.lMu;
     ed = out_params.ed;
-    %     patchIndex = out_params.patchIndex;
     sMap = out_params.sMap;
     maxEd = out_params.maxEd;
     indexMap = out_params.indexMap;
     indM = out_params.indM;
     
-    % main loop 
+    % main loop
     stepSize = 1;
     xIdx = 1 : stepSize : xIdxMax;
     xIdx = [xIdx xIdx(end)+1 : xIdxMax];
@@ -94,18 +105,18 @@ end
 staticNum = sum(indexMap(:)==1);
 dynamicNum = size(indexMap, 1) * size(indexMap, 2) - staticNum;
 Qs = sum(sum(stMap/staticNum));
-Qs
+
 if dynamicNum~=0
     QdExd = zeros(s3, 1);
     for i = 1 :s3
         QdExd(i) = sum(sum(dyMap(:,:,i)/dynamicNum));
-    end    
+    end
     [Qd,index]=max(QdExd);
-    Qd
-    qMap=dyMap(:,:,index) + stMap;    
-    oQ = (Qs + Qd) / 2;
+    
+    qMap=dyMap(:,:,index) + stMap;
+    Q = (Qs + Qd) / 2;
 else
-    oQ = Qs;
+    Q = Qs;
 end
 
 
