@@ -1,5 +1,6 @@
+
 # Perceptual Evaluation of Multi-Exposure Image Fusion for Dynamic Scene
-This is the implementation for [Perceptual Evaluation of Multi-Exposure Image Fusion for Dynamic Scene](sim.jxufe.cn/JDMKL/code/DeghostingIQADatabase.rar), Yuming Fang, Hanwei Zhu, Kede Ma, Zhou Wang, Shutao Li, IEEE Transactions on Image Processing (TIP), to appear, 2019.
+This is the implementation for [Perceptual Evaluation of Multi-Exposure Image Fusion for Dynamic Scene](sim.jxufe.cn/JDMKL/pdf/19_TIP_MEF-SSIMd.pdf), Yuming Fang, Hanwei Zhu, Kede Ma, Zhou Wang, Shutao Li, IEEE Transactions on Image Processing (TIP), to appear, 2019.
 
 ## Abstract
 A common approach to high dynamic range (HDR) imaging is to capture multiple images of different exposures followed by multi-exposure image fusion (MEF) in either radiance or intensity domain. A predominant problem of this approach is
@@ -9,14 +10,34 @@ accurate quality predictions. Motivated by this, we develop an objective quality
 measurements of the two regions into an overall quality score. Experimental results show that the proposed method significantly outperforms the state-of-the-art. In addition, we demonstrate the promise of the proposed model in parameter tuning of MEF methods.
 
 ## Prerequisites
-----
+
 - MATLAB
 
 ## Dataset
-----
-The contruction MEF image quality database can be obtained at: sim.jxufe.cn/JDMKL/code/DeghositngIQADatabase.rar. The dataset contains
-```
 
-```
+The contruction MEF image quality database can be obtained at: http://sim.jxufe.cn/JDMKL/code/DeghostingIQADatabase.rar. The dataset contains:
+
+- 20 multi-exposure image sequences of dynamic natural scenes
+- 9 MEF methods  generate 180 fused images
+- Mean opinion scores of the fused images
 
 
+## Test
+
+Here, we test the source image sequnce 'horse' with two fused images, and show the quality maps.
+ ```
+run demo.m
+ ```
+
+ ## Reference
+ - Y. Fang, H. Zhu, K. Ma, and Z. Wang, “Perceptual quality assessment of HDR deghosting algorithms,” in *IEEE International Conference on Image Processing*, 2017, pp. 3165–3169.
+  - K. Ma, K. Zeng, and Z. Wang, “Perceptual quality assessment for multi-exposure image fusion,” *IEEE Transactions on Image Processing*, vol. 24, no. 11, pp. 3345–3356, Nov. 2015.
+
+ ## Citation
+ ```
+ @article{Fang2019,
+  title={Perceptual Evaluation of Multi-Exposure Image Fusion for Dynamic Scene},
+  author={MYuming Fang, Hanwei Zhu, Kede Ma, Zhou Wang, Shutao Li},
+  journal={IEEE Transactions on Image Processing},
+  publisher={to appear}
+}
