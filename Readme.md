@@ -1,6 +1,6 @@
 
 # Perceptual Evaluation of Multi-Exposure Image Fusion for Dynamic Scene
-This is the implementation for [Perceptual Evaluation of Multi-Exposure Image Fusion for Dynamic Scene](sim.jxufe.cn/JDMKL/pdf/19_TIP_MEF-SSIMd.pdf), Yuming Fang, Hanwei Zhu, Kede Ma, Zhou Wang, Shutao Li, IEEE Transactions on Image Processing (TIP), to appear, 2019.
+This is the implementation for [Perceptual Evaluation for Multi-Exposure Image Fusion of Dynamic Scenes](sim.jxufe.cn/JDMKL/pdf/19_TIP_MEF-SSIMd.pdf), Yuming Fang, Hanwei Zhu, Kede Ma, Zhou Wang, Shutao Li, IEEE Transactions on Image Processing (TIP), to appear, 2019.
 
 ## Abstract
 A common approach to high dynamic range (HDR) imaging is to capture multiple images of different exposures followed by multi-exposure image fusion (MEF) in either radiance or intensity domain. A predominant problem of this approach is
@@ -15,7 +15,7 @@ measurements of the two regions into an overall quality score. Experimental resu
 
 ## Dataset
 
-The contruction MEF image quality database can be obtained at: http://sim.jxufe.cn/JDMKL/code/DeghostingIQADatabase.rar. The dataset contains:
+The MEF image quality database can be obtained at: http://sim.jxufe.cn/JDMKL/code/DeghostingIQADatabase.rar. The dataset contains:
 
 - 20 multi-exposure image sequences of dynamic natural scenes
 - 9 MEF methods  generate 180 fused images
@@ -37,7 +37,7 @@ run demo.m
  ```
  @article{Fang2019,
   title={Perceptual Evaluation of Multi-Exposure Image Fusion for Dynamic Scene},
-  author={MYuming Fang, Hanwei Zhu, Kede Ma, Zhou Wang, Shutao Li},
+  author={Yuming Fang, Hanwei Zhu, Kede Ma, Zhou Wang, Shutao Li},
   journal={IEEE Transactions on Image Processing},
   publisher={to appear}
 }
