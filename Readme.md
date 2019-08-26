@@ -1,5 +1,5 @@
 
-# Perceptual Evaluation of Multi-Exposure Image Fusion for Dynamic Scene
+# Perceptual Evaluation for Multi-Exposure Image Fusion of Dynamic Scenes
 This is the implementation for [Perceptual Evaluation for Multi-Exposure Image Fusion of Dynamic Scenes](sim.jxufe.cn/JDMKL/pdf/19_TIP_MEF-SSIMd.pdf), Yuming Fang, Hanwei Zhu, Kede Ma, Zhou Wang, Shutao Li, IEEE Transactions on Image Processing (TIP), to appear, 2019.
 
 ## Abstract
@@ -36,7 +36,7 @@ run demo.m
  ## Citation
  ```
  @article{Fang2019,
-  title={Perceptual Evaluation of Multi-Exposure Image Fusion for Dynamic Scene},
+  title={Perceptual Evaluation for Multi-Exposure Image Fusion of Dynamic Scenes},
   author={Yuming Fang, Hanwei Zhu, Kede Ma, Zhou Wang, Shutao Li},
   journal={IEEE Transactions on Image Processing},
   publisher={to appear}
