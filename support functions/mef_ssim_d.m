@@ -5,7 +5,7 @@ function [Q, qMap] = mef_ssim_d(imgSeq, fI, C, p, window, structureThres)
 %           2. fI: the MEF image being evaluated in [0-255] grayscale.                          %
 %           3. C                                                                                %
 %           4. p                                                                                %
-%           5. window: sliding window (default 8x8 average window)                              %
+%           5. window: sliding window (default 11x11 average window)                            %
 %           6. SturctureThres                                                                   %
 %                                                                                               %
 %   output:                                                                                     %
