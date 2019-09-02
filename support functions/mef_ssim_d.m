@@ -117,6 +117,7 @@ if dynamicNum~=0
     Q = (Qs + Qd) / 2;
 else
     Q = Qs;
+    qMap = stMap;
 end
 
 
