@@ -15,7 +15,7 @@ measurements of the two regions into an overall quality score. Experimental resu
 
 ## Dataset
 
-The MEF image quality database can be obtained at: http://sim.jxufe.cn/JDMKL/code/DeghostingIQADatabase.rar. The dataset contains:
+The MEF image quality database can be obtained at: [DeghostingIQADatabase](http://sim.jxufe.cn/JDMKL/code/DeghostingIQADatabase.rar). The dataset contains:
 
 - 20 multi-exposure image sequences of dynamic natural scenes
 - 9 MEF methods  generate 180 fused images
