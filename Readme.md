@@ -39,10 +39,9 @@ run demo.m
   title={Perceptual Evaluation for Multi-Exposure Image Fusion of Dynamic Scenes},
   author={Fang, Yuming and Zhu, Hanwei and Ma, Kede and Wang, Zhou and Li, Shutao},
   journal={IEEE Transactions on Image Processing},
-  volume    = {29},
-  number    = {1},
-  pages     = {1127--1138},
-  month     = {Dec.},
-  year      = {2020},
-  
+  volume={29},
+  number={1},
+  pages={1127--1138},
+  month={Dec.},
+  year={2020}  
 }
