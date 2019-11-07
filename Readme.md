@@ -1,6 +1,6 @@
 
-# Perceptual Evaluation for Multi-Exposure Image Fusion of Dynamic Scene
-This is the implementation for [Perceptual Evaluation for Multi-Exposure Image Fusion of Dynamic Scene](http://sim.jxufe.cn/JDMKL/pdf/19_TIP_MEF-SSIMd.pdf), [Yuming Fang](http://sim.jxufe.cn/JDMKL/ymfang.html), Hanwei Zhu, [Kede Ma](https://kedema.org/), [Zhou Wang](https://ece.uwaterloo.ca/~z70wang/), [Shutao Li](http://scholar.google.com/citations?user=PlBq8n8AAAAJ&hl=zh-CN), *IEEE Transactions on Image Processing* (TIP), to appear, 2019.
+# Perceptual Evaluation for Multi-Exposure Image Fusion of Dynamic Scenes
+This is the implementation for [Perceptual Evaluation for Multi-Exposure Image Fusion of Dynamic Scenes](http://sim.jxufe.cn/JDMKL/pdf/19_TIP_MEF-SSIMd.pdf), [Yuming Fang](http://sim.jxufe.cn/JDMKL/ymfang.html), Hanwei Zhu, [Kede Ma](https://kedema.org/), [Zhou Wang](https://ece.uwaterloo.ca/~z70wang/), [Shutao Li](http://scholar.google.com/citations?user=PlBq8n8AAAAJ&hl=zh-CN), *IEEE Transactions on Image Processing* (TIP), to appear, 2019.
 
 ## Abstract
 A common approach to high dynamic range (HDR) imaging is to capture multiple images of different exposures followed by multi-exposure image fusion (MEF) in either radiance or intensity domain. A predominant problem of this approach is
@@ -39,6 +39,10 @@ run demo.m
   title={Perceptual Evaluation for Multi-Exposure Image Fusion of Dynamic Scenes},
   author={Fang, Yuming and Zhu, Hanwei and Ma, Kede and Wang, Zhou and Li, Shutao},
   journal={IEEE Transactions on Image Processing},
-  month={to appear},
-  year={2019}
+  volume    = {29},
+  number    = {1},
+  pages     = {1127--1138},
+  month     = {Dec.},
+  year      = {2020},
+  
 }
