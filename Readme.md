@@ -15,7 +15,7 @@ measurements of the two regions into an overall quality score. Experimental resu
 
 ## Dataset
 
-The MEF image quality database can be obtained at: [DeghostingIQADatabase](http://sim.jxufe.cn/JDMKL/code/DeghostingIQADatabase.rar). The dataset contains:
+The MEF image quality database can be obtained at: [DeghostingIQADatabase](https://drive.google.com/file/d/1GlOoGBVdkfCEVDt7o-RY2gH_zs9WHoo8/view). The dataset contains:
 
 - 20 multi-exposure image sequences of dynamic natural scenes
 - 9 MEF methods  generate 180 fused images
@@ -24,14 +24,14 @@ The MEF image quality database can be obtained at: [DeghostingIQADatabase](http:
 
 ## Test
 
-Here, to test the source image sequnce 'horse' with two fused images, and show the quality maps.
+Here, we test the source image sequence 'horse' with two fused images, and show the quality maps.
  ```
 run demo.m
  ```
 
  ## Reference
  - Y. Fang, H. Zhu, K. Ma, and Z. Wang, “Perceptual quality assessment of HDR deghosting algorithms,” in *IEEE International Conference on Image Processing*, 2017, pp. 3165–3169.
-  - K. Ma, K. Zeng, and Z. Wang, “Perceptual quality assessment for multi-exposure image fusion,” *IEEE Transactions on Image Processing*, vol. 24, no. 11, pp. 3345–3356, Nov. 2015.
+ - K. Ma, K. Zeng, and Z. Wang, “Perceptual quality assessment for multi-exposure image fusion,” *IEEE Transactions on Image Processing*, vol. 24, no. 11, pp. 3345–3356, Nov. 2015.
 
  ## Citation
  ```
